@@ -42,8 +42,8 @@ public class ItemServiceImpl implements ItemService {
 
 	@Override
 	public List<Item> list() throws Exception {
-		// TODO Auto-generated method stub
-		return null;
+		List<Item> itemList = itemMapper.list();
+		return itemList;
 	}
 
 	@Override

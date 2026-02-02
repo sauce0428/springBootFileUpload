@@ -4,7 +4,7 @@
 	<insert id="create">
 		INSERT INTO item(id, name,price, description, url)
 		VALUES(item_seq.NEXTVAL, #{name}, #{price}, #{description}, #{url})
-</insert>
+	</insert>
 
 	<select id="read" resultType="Item">
 
@@ -19,7 +19,10 @@
 	</delete>
 
 	<select id="list" resultType="Item">
-
+	<![CDATA[ 
+		SELECT id, name, price, description, url FROM item 
+		WHERE id > 0 ORDER BY id DESC
+	]]>
 	</select>
 
 	<select id="getPicture" resultType="String">

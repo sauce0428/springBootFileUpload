@@ -2,6 +2,7 @@ package com.zeus.controller;
 
 import java.io.File;
 import java.io.IOException;
+import java.util.List;
 import java.util.UUID;
 
 import org.mybatis.spring.annotation.MapperScan;
@@ -65,6 +66,22 @@ public class ItemController {
 				"%s 상품등록이 실패".formatted(file.getOriginalFilename()));
 		return "item/failed";
 	}
+	
+	@GetMapping("/list") 
+	public String itemList(Model model) throws Exception { 
+		log.info("/itemList");
+		List<Item> itemList = itemService.list(); 
+		model.addAttribute("itemList", itemList); 
+		return "item/list";
+	}
+
+	@GetMapping("/detail") 
+	public String itemDetail(Item item, Model model) throws Exception { 
+		log.info("/detail");
+		List<Item> itemList = itemService.list(); 
+		model.addAttribute("itemList", itemList); 
+		return "item/list";
+	}
 
 	private String uploadFile(String originalName, byte[] fileData) throws Exception {
         // 절대 중복되지 않는 문자열 생성 (uid = 862d7b48-2bcf-4003-afd3-21e53b05f02e)
@@ -81,4 +98,6 @@ public class ItemController {
         FileCopyUtils.copy(fileData, target);
         return createdFileName;
     }
+	
+	
 }
