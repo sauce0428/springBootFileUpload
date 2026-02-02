@@ -212,7 +212,7 @@
                         <tr>
                             <td>${item.id}</td>
                             <td class="title-cell">
-                                <a href="/item/detail?no=${item.id}">${item.name}</a>
+                                <a href="/item/detail?id=${item.id}">${item.name}</a>
                             </td>
                             <td>${item.price}</td>
                             <td>${item.url}</td>

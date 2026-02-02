@@ -6,7 +6,7 @@ import com.zeus.domain.Item;
 
 public interface ItemService {
 	public int create(Item item) throws Exception; 
-	public Item read(Item tiem) throws Exception; 
+	public Item read(Item item) throws Exception; 
 	public int update(Item item) throws Exception; 
 	public int delete(Item item) throws Exception; 
 	public List<Item> list() throws Exception; 
