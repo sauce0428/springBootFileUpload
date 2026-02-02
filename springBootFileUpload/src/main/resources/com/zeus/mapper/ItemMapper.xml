@@ -12,12 +12,13 @@
 	</select>
 
 	<update id="update">
-		UPDATE item	SET name = #{name},	price = #{price}, description = #{description},	url = #{url}
+		UPDATE item SET name = #{name}, price = #{price},
+		description = #{description}, url = #{url}
 		WHERE id = #{id}
 	</update>
 
 	<delete id="delete">
-
+		DELETE FROM item WHERE id = #{id}
 	</delete>
 
 	<select id="list" resultType="Item">
