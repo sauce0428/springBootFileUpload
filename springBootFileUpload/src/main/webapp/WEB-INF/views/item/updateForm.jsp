@@ -6,9 +6,8 @@
 <html>
 <head>
 <meta charset="UTF-8">
-<title>T1 Community | Write</title>
+<title>T1 Shop | Item Register</title>
 <style>
-/* T1 Official Theme */
 :root {
 	--t1-red: #E2012D;
 	--t1-black: #0f0f0f;
@@ -25,6 +24,7 @@ body {
 	align-items: center;
 	min-height: 100vh;
 	margin: 0;
+	padding: 50px 0;
 }
 
 .write-container {
@@ -52,7 +52,6 @@ body {
 	color: var(--t1-red);
 }
 
-/* Form Styles */
 .form-group {
 	margin-bottom: 25px;
 }
@@ -66,7 +65,9 @@ body {
 	font-weight: bold;
 }
 
-input[type="text"], textarea {
+input[type="text"],
+input[type="number"],
+textarea {
 	width: 100%;
 	padding: 12px 15px;
 	background: #0b0b0b;
@@ -78,18 +79,18 @@ input[type="text"], textarea {
 	transition: 0.3s;
 }
 
-input[type="text"]:focus, textarea:focus {
+textarea {
+	height: 120px;
+	resize: none;
+}
+
+input:focus,
+textarea:focus {
 	border-color: var(--t1-red);
 	outline: none;
 	box-shadow: 0 0 10px rgba(226, 1, 45, 0.3);
 }
 
-textarea {
-	resize: none;
-	height: 250px;
-}
-
-/* Buttons */
 .btn-area {
 	display: flex;
 	gap: 15px;
@@ -106,6 +107,8 @@ textarea {
 	cursor: pointer;
 	transition: 0.3s;
 	text-transform: uppercase;
+	text-align: center;
+	text-decoration: none;
 }
 
 .btn-submit {
@@ -119,54 +122,71 @@ textarea {
 	box-shadow: 0 5px 15px rgba(226, 1, 45, 0.5);
 }
 
-.btn-reset {
+.btn-list {
 	background: #333;
 	color: #fff;
 }
 
-.btn-reset:hover {
-	background: #fff;
-	color: #ff1a4a;
+.btn-list:hover {
+	background: #444;
 	transform: translateY(-3px);
-	box-shadow: 0 5px 15px rgba(226, 1, 45, 0.5);
 }
 
 .btn-cancel {
-	background: #333;
-	color: #bbb;
-}
-
-.btn-cancel:hover {
-	background: #444;
+	background: #555;
 	color: #fff;
 }
 
-/* Decoration */
+.btn-cancel:hover {
+	background: #666;
+	transform: translateY(-3px);
+}
+
+.file-upload-wrapper {
+	position: relative;
+	width: 100%;
+}
+
+.file-input {
+	display: none;
+}
+
+.file-label {
+	display: flex;
+	align-items: center;
+	background: #0b0b0b;
+	border: 1px solid #333;
+	border-radius: 5px;
+	cursor: pointer;
+	overflow: hidden;
+	transition: 0.3s;
+}
+
+.file-label:hover {
+	border-color: var(--t1-red);
+}
+
+.file-btn {
+	background: #222;
+	color: var(--t1-gold);
+	padding: 12px 20px;
+	font-size: 0.85rem;
+	font-weight: bold;
+	border-right: 1px solid #333;
+}
+
+.file-name-text {
+	padding: 0 15px;
+	color: #666;
+	font-size: 0.9rem;
+}
+
 .bottom-deco {
 	margin-top: 30px;
 	font-size: 12px;
 	color: #444;
 	text-align: center;
 	font-family: monospace;
-}
-
-.btn-list {
-	display: inline-block;
-	padding: 15px 40px;
-	background: var(--t1-red);
-	color: white;
-	text-decoration: none;
-	font-weight: bold;
-	border-radius: 5px;
-	transition: 0.3s;
-	border: none;
-	cursor: pointer;
-}
-
-.btn-list:hover {
-	background: #ffffff;
-	color: var(--t1-red);
-	box-shadow: 0 0 20px rgba(255, 255, 255, 0.4);
 }
 </style>
 </head>
@@ -175,57 +195,79 @@ textarea {
 	<div class="write-container">
 		<div class="header">
 			<h1>
-				<span>${member.name}님의 회원정보 수정</span>
+				ITEM <span>UPDATE</span>
 			</h1>
 		</div>
-		<form:form modelAttribute="member" action="/member/update"
-			method="post">
+
+		<form action="/item/update" method="post" enctype="multipart/form-data">
+			
 			<div class="form-group">
-				<label for="no">회원번호</label> <input type="text" id="no" name="no"
-					value="${member.no}" readonly>
+				<label for="id">상품아이디</label> <input type="text" id="id"
+					name="id" value="${item.id}" readonly>
 			</div>
+			
 			<div class="form-group">
-				<label for="id">아이디</label> <input type="text" id="id" name="id"
-					value="${member.id}" readonly>
-			</div>
-			<div class="form-group">
-				<label for="name">작성자</label> <input type="text" id="name"
-					name="name" value="${member.name}" required>
-			</div>
-			<div class="form-group">
-				<label for="pw">비밀번호</label> <input type="password" id="pw"
-					name="pw" value="${member.pw}" required>
+				<label for="name">상품이름</label> <input type="text" id="name"
+					name="name" value="${item.name}" required>
 			</div>
 
+			<div class="form-group">
+				<label for="price">상품가격(KRW)</label> <input type="number" id="price"
+					name="price" value="${item.price}" required>
+			</div>
 
-			<form:select path="authList[0].auth" disabled="disabled">
-				<form:option value="" label="=== 선택해 주세요 ===" />
-				<form:option value="ROLE_USER" label="사용자" />
-				<form:option value="ROLE_MEMBER" label="회원" />
-				<form:option value="ROLE_ADMIN" label="관리자" />
-			</form:select>
-			<form:select path="authList[1].auth" disabled="disabled">
-				<form:option value="" label="=== 선택해 주세요 ===" />
-				<form:option value="ROLE_USER" label="사용자" />
-				<form:option value="ROLE_MEMBER" label="회원" />
-				<form:option value="ROLE_ADMIN" label="관리자" />
-			</form:select>
-			<form:select path="authList[2].auth" disabled="disabled">
-				<form:option value="" label="=== 선택해 주세요 ===" />
-				<form:option value="ROLE_USER" label="사용자" />
-				<form:option value="ROLE_MEMBER" label="회원" />
-				<form:option value="ROLE_ADMIN" label="관리자" />
-			</form:select>
+			<div class="form-group">
+				<label for="picture1">상품이미지</label>
+				<img alt="상품이미지 ${item.name}" src="/item/display?id=${item.id}" width="300" id="picture1">
+			</div>
 
+			<div class="form-group">
+				<label>Item Image</label>
+				<div class="file-upload-wrapper">
+					<input type="file" id="picture" name="picture" class="file-input"
+						onchange="updateFileName(this)"> <label for="picture"
+						class="file-label"> <span class="file-btn">파일 선택</span> <span
+						id="file-name" class="file-name-text">선택된 파일 없음</span>
+					</label>
+				</div>
+			</div>
+
+			<div class="form-group">
+				<label for="description">상품 상세 설명</label>
+				<textarea id="description" name="description"
+					placeholder="상품 상세 설명을 입력하세요">${item.description}</textarea>
+			</div>
 
 			<div class="btn-area">
-				<a href="/member/memberList" class="btn-list">회원목록</a>
-				<button type="submit" class="btn btn-submit">회원정보 수정</button>
-				<button type="reset" class="btn btn-reset">회원정보 수정 취소</button>
-
-
+				<a href="/item/list" class="btn btn-list">상품목록</a>
+				<button type="submit" class="btn btn-submit">상품수정</button>
+				<a href="/item/updateForm?id=${item.id}" class="btn btn-cancel">상품수정 취소</a>
 			</div>
-		</form:form>
+		</form>
 
+		<div class="bottom-deco">[ SYSTEM: MULTIPART DATA READY TO
+			UPLOAD ]</div>
+	</div>
+
+	<script>
+		function updateFileName(input) {
+			// 1. 파일명을 표시할 span 태그를 가져옵니다.
+			const fileNameDisplay = document.getElementById('file-name');
+
+			// 2. 파일이 선택되었는지 확인합니다.
+			if (input.files && input.files.length > 0) {
+				// 3. 첫 번째 파일의 이름을 가져와서 span에 넣어줍니다.
+				const name = input.files[0].name;
+				fileNameDisplay.innerText = name;
+
+				// 4. (디테일) 파일이 선택되면 글자색을 하얗게 바꿔서 강조합니다.
+				fileNameDisplay.style.color = "#ffffff";
+			} else {
+				// 5. 선택이 취소되었을 때의 기본 문구
+				fileNameDisplay.innerText = "선택된 파일 없음";
+				fileNameDisplay.style.color = "#666";
+			}
+		}
+	</script>
 </body>
 </html>
